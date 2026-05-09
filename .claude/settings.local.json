@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc \"/Users/yuya/Downloads/LINE秘書Bot_仕様書.docx\" -t markdown)",
+      "Read(//private/tmp/**)",
+      "Bash(unzip -q \"/Users/yuya/Downloads/LINE秘書Bot_仕様書.docx\")",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(pandoc /Users/yuya/Downloads/PersonalKnowledgeApp_仕様書.docx -o /tmp/spec.md)",
+      "Read(//tmp/**)",
+      "Bash(python3)",
+      "Bash(unzip -q /Users/yuya/Downloads/PersonalKnowledgeApp_仕様書.docx)",
+      "Bash(unzip -oq /Users/yuya/Downloads/PersonalKnowledgeApp_仕様書.docx)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Initial project setup for Personal Knowledge App *)"
+    ]
+  }
+}
