@@ -46,3 +46,10 @@ env/
 # Credentials
 service_account.json
 secrets.toml
+
+# Sensitive files
+# *.json
+*.rtf
+claudeAPIkey.rtf
+personalknowledgeapp-*.json
+streamlit/personalknowledgeapp-*.json
