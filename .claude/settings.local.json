@@ -16,7 +16,8 @@
       "Bash(git add *)",
       "Bash(git commit -m 'Initial project setup for Personal Knowledge App *)",
       "mcp__Claude_in_Chrome__tabs_context_mcp",
-      "Bash(git commit -m 'Update information clip sheet columns *)"
+      "Bash(git commit -m 'Update information clip sheet columns *)",
+      "Bash(git commit -m 'Phase 1: Complete Streamlit app with Google Sheets integration *)"
     ]
   }
 }

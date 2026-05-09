@@ -1,7 +1,7 @@
 """Configuration for PersonalKnowledgeApp"""
 
 # Google Sheets Configuration
-SHEET_ID = "1-jPjYNrFTwk-TRG_bn6UnhwMHOH3h5Q6_GiFAYN4VEM"
+SHEET_ID = "15Q77ftiz-yxtYAU3kOYxuRXLvdZdw6fW9TC-BuKMnvU"
 
 # Sheet names
 SHEET_DIARY = "日記"
