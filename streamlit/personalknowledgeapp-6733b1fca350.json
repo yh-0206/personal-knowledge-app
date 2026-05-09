@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "personalknowledgeapp",
+  "private_key_id": "6733b1fca3509dd0ffdc310ce746e4e63bb8d7ec",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDJ7M8utMQESOUu\n75XIgbjkLxSYHmSZKLa3NXXQHLzVsuqFK+H91dKGWaTyVuHDEFIrW/AvOfGkjryf\nZOT709AkN0eJgUHeq+6Rz2zGDRo0ZNFxq08T4qEsmXrvOhIq4K+7DfnMhxescAxl\n5uNQZKuU/m3BV7nqaYPS/0hcAkUkr8FvEHGSVC63Yq/PEw7A5htRARaH/NM5SsUq\nvl59nc974JpELQ0wVyoiytJh+TS4b99Dco/ni88obQOtlfZGV6eTm4H37SnO8ms3\n9zwKAkI4Bon8TkmBz9ecx09KtjTWoRlUm/si5h1R9dnFZfkp2stQ56fwS0YY3y2j\nG0lR9bEDAgMBAAECggEADIWC04KiJSHgFGkHAMgKjxvcSxKXamf77KCEDcO6cgYG\nRPvTp8n6pBorAFwi49W/QrEQ09zj/zBawgefq34XCifjZ8N8MjK3OJOES0PEvDsE\nQeg9nx4OoJVj6jHPrpkATLkxJF28OhU4r5kBv5p+iV69r5+hB8hDRHJQKmR5pSyk\nkcLpCxOuaOzS0PwhJlddzPY3mbdSq3foOtAtfBZQ4LUOvxcsm4wbgYIJj15FF1JH\nlN1kgoYTCUtLfSxkgzkxeCqrtRc4/K7azzUOpsVrksmpdzYM3ZPaaQ83gAcFoip1\nZSSEWNVk+HMN1N4AgfNDeS+jhD7dMlQ6vLWleL1mAQKBgQD+aWSFMkhP8/Q/6Yla\nmBF7GGrDWCvX2eHHYIltO1JuxhZyiRMMQfWh8+umJNILiu1FOzUBgUQTJBhFZbPd\nmGx7vbzKFLgKlMJgkpx6cV8GYlnUvY5Lp4VcA+s3kmwKRAlla4dKV/FXrrFcz4wG\nhGTWfKGUZA1ue1HRCU5EeStGawKBgQDLL4f3lq2KUNWCLSnSPXWf8spyb2FV59CR\nxqdRPgYGkSHf6RdAQXxM3mWH3etqVl5jKC3Y/Mtqaz1CyWcHkde53CkOlGilB0zM\nR6FxOqYcEtM+Qs/cXUTwtHlJJz+7ILJwaHTZRk+ed2xoTcyBxHehZjgsf/9DYf9v\nsPUyTYX1yQKBgERFnh8MXlFuYwZfsmdoVZCV/diMKb/UDX3GjzqL59QoPk/gLwdk\nD/m1DnDYgrFsR74DZHcR7GXCkuzUnQ8DX2FZinckVjsornzh+zH0iI6bCAZKFAyD\nWQtXVeDk3y9mEKtxzq2Jqg9gpuIEJEx/bNwOOAItU1lpqIwTFjjT12QfAoGAJWiQ\n3fKt7MNJK/hotL6AA3zN7Re4kfpmGhC7CWgj792UoQbnMvtbiUOA6ezfxOo14oep\nOUQBp4wq8TrnbytYzm1MWdTVF10qtImTnacwogaNQe9HGclKQg7YLbG+OBOjBrMU\noFQjoIdYPDPmrRWg+OQ6/2Zpdtx6DPRFkIdZXJECgYBuC0baPa9aCo4VG4J3bwWp\n8w2kbImc8wgg4WhCxtG8wAZy5UkCBj3lkRKBCJzHXeORFwZpNtezQy7amC/hWRSp\nrOQCD53zaSH3VqLj1YGev4mVmsqhGv3aQHOL+nrlaZ04rupvS8tT8NE+uTRgbgRj\nxabV1z4YGO38JLlD+P+CkA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "personalknowledgeapp@personalknowledgeapp.iam.gserviceaccount.com",
+  "client_id": "108524690455875709824",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/personalknowledgeapp%40personalknowledgeapp.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -14,7 +14,9 @@
       "Bash(git init *)",
       "Bash(git config *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'Initial project setup for Personal Knowledge App *)"
+      "Bash(git commit -m 'Initial project setup for Personal Knowledge App *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(git commit -m 'Update information clip sheet columns *)"
     ]
   }
 }

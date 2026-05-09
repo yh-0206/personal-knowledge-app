@@ -16,7 +16,7 @@ APP_ICON = "📚"
 # Columns for each sheet
 DIARY_COLUMNS = ["日付", "曜日", "本文", "気分スコア", "記録日時"]
 CONTENTS_COLUMNS = ["日付", "タイトル", "ジャンル", "メモ", "mdパス", "追記履歴", "記録日時"]
-CLIPS_COLUMNS = ["保存日時", "URL", "タイトル", "要約", "トピック"]
+CLIPS_COLUMNS = ["保存日時", "URL", "タイトル", "要約", "コメント", "トピック"]
 TODOS_COLUMNS = ["ID", "タスク名", "ステータス", "優先度", "期限日", "作成日時", "完了日時"]
 
 # Content genres

@@ -128,10 +128,10 @@ class SheetsHandler:
         values = [today, title, genre, memo, "", "", timestamp]
         return self.append_row(config.SHEET_CONTENTS, values)
 
-    def add_clip(self, url: str, title: str, summary: str, topic: str) -> bool:
+    def add_clip(self, url: str, title: str, summary: str, comment: str = "", topic: str = "") -> bool:
         """Add a new clip"""
         timestamp = datetime.now().isoformat()
-        values = [timestamp, url, title, summary, topic]
+        values = [timestamp, url, title, summary, comment, topic]
         return self.append_row(config.SHEET_CLIPS, values)
 
     def add_todo(self, task_name: str, priority: str, due_date: str = "") -> bool:
