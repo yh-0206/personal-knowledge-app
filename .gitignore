@@ -51,5 +51,5 @@ secrets.toml
 # *.json
 *.rtf
 claudeAPIkey.rtf
-personalknowledgeapp-*.json
-streamlit/personalknowledgeapp-*.json
+# personalknowledgeapp-*.json
+# streamlit/personalknowledgeapp-*.json
