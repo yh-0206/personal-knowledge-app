@@ -15,37 +15,37 @@ class SheetsHandler:
         self.sheet_id = config.SHEET_ID
 
     def _get_credentials(self):
-    """Get credentials from JSON file or Streamlit Secrets"""
-    import os
-    import json
+        """Get credentials from JSON file or Streamlit Secrets"""
+        import os
+        import json
 
-    try:
-        # Try Streamlit Secrets first
         try:
-            creds_dict = st.secrets.get("google_service_account", {})
-            if creds_dict:
-                creds = Credentials.from_service_account_info(
-                    creds_dict,
+            # Try Streamlit Secrets first
+            try:
+                creds_dict = st.secrets.get("google_service_account", {})
+                if creds_dict:
+                    creds = Credentials.from_service_account_info(
+                        creds_dict,
+                        scopes=['https://www.googleapis.com/auth/spreadsheets']
+                    )
+                    return creds
+            except Exception:
+                pass
+
+            # Try local JSON file
+            json_file = "personalknowledgeapp-0123180f35bc.json"
+            if os.path.exists(json_file):
+                creds = Credentials.from_service_account_file(
+                    json_file,
                     scopes=['https://www.googleapis.com/auth/spreadsheets']
                 )
                 return creds
-        except Exception:
-            pass
 
-        # Try local JSON file
-        json_file = "personalknowledgeapp-0123180f35bc.json"
-        if os.path.exists(json_file):
-            creds = Credentials.from_service_account_file(
-                json_file,
-                scopes=['https://www.googleapis.com/auth/spreadsheets']
-            )
-            return creds
-
-        st.error("Google Sheets credentials not found")
-        return None
-    except Exception as e:
-        st.error(f"Error loading credentials: {e}")
-        return None
+            st.error("Google Sheets credentials not found")
+            return None
+        except Exception as e:
+            st.error(f"Error loading credentials: {e}")
+            return None
 
     def read_sheet(self, sheet_name: str) -> pd.DataFrame:
         """Read data from a specific sheet"""
