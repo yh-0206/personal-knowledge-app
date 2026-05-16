@@ -21,21 +21,18 @@ class SheetsHandler:
         import os
 
         try:
-            # Debug: Check available secrets
-            all_secrets = dict(st.secrets)
-            st.write(f"DEBUG: Available secrets keys: {list(all_secrets.keys())}")
-
             # Try Base64 encoded credentials from Streamlit Secrets (Streamlit Cloud)
             try:
                 creds_base64 = st.secrets.get("GOOGLE_CREDENTIALS_BASE64", "")
-                st.write(f"DEBUG: Base64 credentials found: {len(creds_base64)} chars")
 
                 if creds_base64:
                     creds_json = base64.b64decode(creds_base64).decode('utf-8')
-                    st.write("DEBUG: Base64 decoding successful")
-
                     creds_dict = json.loads(creds_json)
-                    st.write("DEBUG: JSON parsing successful")
+
+                    # Debug: Print private key format
+                    st.write(f"DEBUG: Private key starts with: {creds_dict.get('private_key', '')[:50]}")
+                    st.write(f"DEBUG: Private key length: {len(creds_dict.get('private_key', ''))}")
+                    st.write(f"DEBUG: Private key has newlines: {'\\n' in creds_dict.get('private_key', '')}")
 
                     creds = Credentials.from_service_account_info(
                         creds_dict,
@@ -45,7 +42,9 @@ class SheetsHandler:
                     return creds
             except Exception as e:
                 st.write(f"DEBUG: Secrets error: {e}")
-                pass
+                st.write(f"DEBUG: Error type: {type(e).__name__}")
+                import traceback
+                st.write(f"DEBUG: Traceback: {traceback.format_exc()}")
 
             # Try local JSON file (local development)
             json_file = "personalknowledgeapp-0123180f35bc.json"
