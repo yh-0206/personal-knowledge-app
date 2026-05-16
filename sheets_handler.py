@@ -21,23 +21,36 @@ class SheetsHandler:
         import os
 
         try:
+            # Debug: Check available secrets
+            all_secrets = dict(st.secrets)
+            st.write(f"DEBUG: Available secrets keys: {list(all_secrets.keys())}")
+
             # Try Base64 encoded credentials from Streamlit Secrets (Streamlit Cloud)
             try:
                 creds_base64 = st.secrets.get("GOOGLE_CREDENTIALS_BASE64", "")
+                st.write(f"DEBUG: Base64 credentials found: {len(creds_base64)} chars")
+
                 if creds_base64:
                     creds_json = base64.b64decode(creds_base64).decode('utf-8')
+                    st.write("DEBUG: Base64 decoding successful")
+
                     creds_dict = json.loads(creds_json)
+                    st.write("DEBUG: JSON parsing successful")
+
                     creds = Credentials.from_service_account_info(
                         creds_dict,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
+                    st.write("DEBUG: Credentials created successfully")
                     return creds
             except Exception as e:
+                st.write(f"DEBUG: Secrets error: {e}")
                 pass
 
             # Try local JSON file (local development)
             json_file = "personalknowledgeapp-0123180f35bc.json"
             if os.path.exists(json_file):
+                st.write("DEBUG: Using local JSON file")
                 creds = Credentials.from_service_account_file(
                     json_file,
                     scopes=['https://www.googleapis.com/auth/spreadsheets']
