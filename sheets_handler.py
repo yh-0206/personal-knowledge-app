@@ -41,12 +41,23 @@ class SheetsHandler:
                 json_file = json_patterns[0]
 
                 try:
+                    # Debug: Check file content
+                    with open(json_file, 'r') as f:
+                        file_content = f.read()
+
+                    with st.expander("📄 JSONファイルの内容確認"):
+                        st.write(f"**ファイルパス:** `{json_file}`")
+                        st.write(f"**ファイルサイズ:** {len(file_content)} bytes")
+                        st.write(f"**最初の100文字:** {file_content[:100]}...")
+
                     creds = Credentials.from_service_account_file(
                         json_file,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
                     return creds
                 except Exception as e:
+                    with st.expander("⚠️ JSONファイル読み込みエラー"):
+                        st.write(f"**エラー:** {str(e)}")
                     pass  # Fall through to Streamlit Secrets
 
             # Priority 2: Try Streamlit Secrets - Base64 encoded version (for Streamlit Cloud)
