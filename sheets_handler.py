@@ -8,6 +8,7 @@ import pandas as pd
 from datetime import datetime
 import config
 import os
+import glob
 
 class SheetsHandler:
     def __init__(self):
@@ -19,38 +20,24 @@ class SheetsHandler:
         """Get credentials from local JSON file or Streamlit Secrets"""
 
         try:
-            # Priority 1: Try local JSON file (works in both local dev and Streamlit Cloud)
-            json_files = [
-                "personalknowledgeapp-0123180f35bc.json",
-                "personalknowledgeapp-*.json"
-            ]
-
-            for pattern in json_files:
-                if pattern.endswith("*.json"):
-                    # Find any personalknowledgeapp-*.json file
-                    import glob
-                    matches = glob.glob(pattern)
-                    if matches:
-                        json_file = matches[0]
-                        break
-                elif os.path.exists(pattern):
-                    json_file = pattern
-                    break
-            else:
-                json_file = None
-
-            if json_file and os.path.exists(json_file):
+            # Priority 1: Try to find any personalknowledgeapp-*.json file
+            json_patterns = glob.glob("personalknowledgeapp-*.json")
+            
+            if json_patterns:
+                # Sort in reverse to get the newest file first
+                json_patterns.sort(reverse=True)
+                json_file = json_patterns[0]
+                
                 try:
                     creds = Credentials.from_service_account_file(
                         json_file,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
-                    st.write(f"✅ Credentials loaded from {json_file}")
                     return creds
                 except Exception as e:
-                    st.write(f"Warning: Could not load from {json_file}: {e}")
+                    pass  # Fall through to Streamlit Secrets
 
-            # Priority 2: Try Streamlit Secrets (fallback)
+            # Priority 2: Try Streamlit Secrets (fallback for Streamlit Cloud)
             try:
                 creds_dict = st.secrets.get("google_service_account", {})
                 if creds_dict:
@@ -58,10 +45,9 @@ class SheetsHandler:
                         creds_dict,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
-                    st.write("✅ Credentials loaded from Streamlit Secrets")
                     return creds
             except Exception as e:
-                st.write(f"Warning: Could not load from Secrets: {e}")
+                pass
 
             st.error("Google Sheets credentials not found")
             return None
