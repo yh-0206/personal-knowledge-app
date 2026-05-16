@@ -22,15 +22,10 @@ class SheetsHandler:
         """Get credentials from local JSON file or Streamlit Secrets"""
 
         try:
-            # Debug: Check current directory and files
-            import sys
-            current_dir = os.getcwd()
-            print(f"DEBUG: Current directory: {current_dir}")
-            print(f"DEBUG: Files in current dir: {os.listdir(current_dir)}")
-
             # Priority 1: Try to find any personalknowledgeapp-*.json file
-            json_patterns = glob.glob("personalknowledgeapp-*.json")
-            print(f"DEBUG: Found JSON files: {json_patterns}")
+            # Use absolute path based on script directory
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            json_patterns = glob.glob(os.path.join(script_dir, "personalknowledgeapp-*.json"))
 
             if json_patterns:
                 # Sort in reverse to get the newest file first
