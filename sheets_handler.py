@@ -9,6 +9,8 @@ from datetime import datetime
 import config
 import os
 import glob
+import json
+import base64
 
 class SheetsHandler:
     def __init__(self):
@@ -22,12 +24,12 @@ class SheetsHandler:
         try:
             # Priority 1: Try to find any personalknowledgeapp-*.json file
             json_patterns = glob.glob("personalknowledgeapp-*.json")
-            
+
             if json_patterns:
                 # Sort in reverse to get the newest file first
                 json_patterns.sort(reverse=True)
                 json_file = json_patterns[0]
-                
+
                 try:
                     creds = Credentials.from_service_account_file(
                         json_file,
@@ -37,7 +39,21 @@ class SheetsHandler:
                 except Exception as e:
                     pass  # Fall through to Streamlit Secrets
 
-            # Priority 2: Try Streamlit Secrets (fallback for Streamlit Cloud)
+            # Priority 2: Try Streamlit Secrets - Base64 encoded version (for Streamlit Cloud)
+            try:
+                creds_b64 = st.secrets.get("google_service_account_b64", "")
+                if creds_b64:
+                    creds_json = base64.b64decode(creds_b64).decode()
+                    creds_dict = json.loads(creds_json)
+                    creds = Credentials.from_service_account_info(
+                        creds_dict,
+                        scopes=['https://www.googleapis.com/auth/spreadsheets']
+                    )
+                    return creds
+            except Exception as e:
+                pass
+
+            # Priority 3: Try standard Streamlit Secrets format (fallback)
             try:
                 creds_dict = st.secrets.get("google_service_account", {})
                 if creds_dict:
