@@ -29,22 +29,20 @@ class SheetsHandler:
                     creds_json = base64.b64decode(creds_base64).decode('utf-8')
                     creds_dict = json.loads(creds_json)
 
-                    # Debug: Print private key format
-                    st.write(f"DEBUG: Private key starts with: {creds_dict.get('private_key', '')[:50]}")
-                    st.write(f"DEBUG: Private key length: {len(creds_dict.get('private_key', ''))}")
-                    st.write(f"DEBUG: Private key has newlines: {'\\n' in creds_dict.get('private_key', '')}")
+                    # Fix: Replace literal \n with actual newlines in private_key
+                    if 'private_key' in creds_dict:
+                        creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
+
+                    st.write("DEBUG: Credentials loaded and fixed successfully")
 
                     creds = Credentials.from_service_account_info(
                         creds_dict,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
-                    st.write("DEBUG: Credentials created successfully")
+                    st.write("✅ Google Sheets credentials validated successfully!")
                     return creds
             except Exception as e:
                 st.write(f"DEBUG: Secrets error: {e}")
-                st.write(f"DEBUG: Error type: {type(e).__name__}")
-                import traceback
-                st.write(f"DEBUG: Traceback: {traceback.format_exc()}")
 
             # Try local JSON file (local development)
             json_file = "personalknowledgeapp-0123180f35bc.json"
