@@ -28,10 +28,12 @@ class SheetsHandler:
             search_path = os.path.join(script_dir, "personalknowledgeapp-*.json")
             json_patterns = glob.glob(search_path)
 
-            print(f"[DEBUG] Script directory: {script_dir}")
-            print(f"[DEBUG] Search pattern: {search_path}")
-            print(f"[DEBUG] Files in script dir: {os.listdir(script_dir)[:10]}")
-            print(f"[DEBUG] Found JSON files: {json_patterns}")
+            # Display debug info in Streamlit app
+            with st.expander("🔍 デバッグ情報"):
+                st.write(f"**スクリプトディレクトリ:** `{script_dir}`")
+                st.write(f"**検索パターン:** `{search_path}`")
+                st.write(f"**ディレクトリ内のファイル:** {os.listdir(script_dir)[:20]}")
+                st.write(f"**見つかったJSONファイル:** {json_patterns}")
 
             if json_patterns:
                 # Sort in reverse to get the newest file first
