@@ -7,6 +7,8 @@ from googleapiclient.discovery import build
 import pandas as pd
 from datetime import datetime
 import config
+import base64
+import json
 
 class SheetsHandler:
     def __init__(self):
@@ -15,24 +17,25 @@ class SheetsHandler:
         self.sheet_id = config.SHEET_ID
 
     def _get_credentials(self):
-        """Get credentials from JSON file or Streamlit Secrets"""
+        """Get credentials from Base64 encoded environment or local JSON file"""
         import os
-        import json
 
         try:
-            # Try Streamlit Secrets first
+            # Try Base64 encoded credentials from Streamlit Secrets (Streamlit Cloud)
             try:
-                creds_dict = st.secrets.get("google_service_account", {})
-                if creds_dict:
+                creds_base64 = st.secrets.get("GOOGLE_CREDENTIALS_BASE64", "")
+                if creds_base64:
+                    creds_json = base64.b64decode(creds_base64).decode('utf-8')
+                    creds_dict = json.loads(creds_json)
                     creds = Credentials.from_service_account_info(
                         creds_dict,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
                     return creds
-            except Exception:
+            except Exception as e:
                 pass
 
-            # Try local JSON file
+            # Try local JSON file (local development)
             json_file = "personalknowledgeapp-0123180f35bc.json"
             if os.path.exists(json_file):
                 creds = Credentials.from_service_account_file(
