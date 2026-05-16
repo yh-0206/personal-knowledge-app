@@ -25,7 +25,13 @@ class SheetsHandler:
             # Priority 1: Try to find any personalknowledgeapp-*.json file
             # Use absolute path based on script directory
             script_dir = os.path.dirname(os.path.abspath(__file__))
-            json_patterns = glob.glob(os.path.join(script_dir, "personalknowledgeapp-*.json"))
+            search_path = os.path.join(script_dir, "personalknowledgeapp-*.json")
+            json_patterns = glob.glob(search_path)
+
+            print(f"[DEBUG] Script directory: {script_dir}")
+            print(f"[DEBUG] Search pattern: {search_path}")
+            print(f"[DEBUG] Files in script dir: {os.listdir(script_dir)[:10]}")
+            print(f"[DEBUG] Found JSON files: {json_patterns}")
 
             if json_patterns:
                 # Sort in reverse to get the newest file first
