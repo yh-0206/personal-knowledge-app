@@ -1,5 +1,9 @@
 """Google Sheets API handler"""
 
+import os
+# Disable Google Cloud metadata server for non-GCP environments
+os.environ['GOOGLE_AUTH_DISABLE_UNIVERSE_DOMAIN_VALIDATION'] = 'True'
+
 import streamlit as st
 from google.oauth2.service_account import Credentials
 from google.auth.transport.requests import Request
@@ -7,7 +11,6 @@ from googleapiclient.discovery import build
 import pandas as pd
 from datetime import datetime
 import config
-import os
 import glob
 import json
 import base64
