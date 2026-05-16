@@ -67,27 +67,48 @@ class SheetsHandler:
             # Priority 2: Try Streamlit Secrets - Base64 encoded version (for Streamlit Cloud)
             try:
                 creds_b64 = st.secrets.get("google_service_account_b64", "")
+                with st.expander("🔐 Base64認証試行"):
+                    st.write(f"**Base64値が存在:** {bool(creds_b64)}")
+                    if creds_b64:
+                        st.write(f"**Base64長:** {len(creds_b64)} chars")
+
                 if creds_b64:
-                    creds_json = base64.b64decode(creds_b64).decode()
-                    creds_dict = json.loads(creds_json)
-                    creds = Credentials.from_service_account_info(
-                        creds_dict,
-                        scopes=['https://www.googleapis.com/auth/spreadsheets']
-                    )
-                    return creds
+                    try:
+                        creds_json = base64.b64decode(creds_b64).decode()
+                        st.write("✅ Base64デコード成功")
+                        creds_dict = json.loads(creds_json)
+                        st.write("✅ JSON解析成功")
+                        creds = Credentials.from_service_account_info(
+                            creds_dict,
+                            scopes=['https://www.googleapis.com/auth/spreadsheets']
+                        )
+                        st.write("✅ 認証情報作成成功")
+                        return creds
+                    except Exception as inner_e:
+                        st.write(f"❌ Base64処理エラー: {str(inner_e)}")
             except Exception as e:
+                with st.expander("⚠️ Base64認証エラー詳細"):
+                    st.write(f"**エラー:** {str(e)}")
                 pass
 
             # Priority 3: Try standard Streamlit Secrets format (fallback)
             try:
                 creds_dict = st.secrets.get("google_service_account", {})
+                with st.expander("📋 標準Secrets試行"):
+                    st.write(f"**Secrets値が存在:** {bool(creds_dict)}")
+                    if creds_dict:
+                        st.write(f"**キー:** {list(creds_dict.keys())}")
+
                 if creds_dict:
                     creds = Credentials.from_service_account_info(
                         creds_dict,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
+                    st.write("✅ 標準Secrets認証成功")
                     return creds
             except Exception as e:
+                with st.expander("⚠️ 標準Secrets認証エラー詳細"):
+                    st.write(f"**エラー:** {str(e)}")
                 pass
 
             st.error("Google Sheets credentials not found")
