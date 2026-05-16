@@ -7,8 +7,7 @@ from googleapiclient.discovery import build
 import pandas as pd
 from datetime import datetime
 import config
-import base64
-import json
+import os
 
 class SheetsHandler:
     def __init__(self):
@@ -17,42 +16,52 @@ class SheetsHandler:
         self.sheet_id = config.SHEET_ID
 
     def _get_credentials(self):
-        """Get credentials from Base64 encoded environment or local JSON file"""
-        import os
+        """Get credentials from local JSON file or Streamlit Secrets"""
 
         try:
-            # Try Base64 encoded credentials from Streamlit Secrets (Streamlit Cloud)
+            # Priority 1: Try local JSON file (works in both local dev and Streamlit Cloud)
+            json_files = [
+                "personalknowledgeapp-0123180f35bc.json",
+                "personalknowledgeapp-*.json"
+            ]
+
+            for pattern in json_files:
+                if pattern.endswith("*.json"):
+                    # Find any personalknowledgeapp-*.json file
+                    import glob
+                    matches = glob.glob(pattern)
+                    if matches:
+                        json_file = matches[0]
+                        break
+                elif os.path.exists(pattern):
+                    json_file = pattern
+                    break
+            else:
+                json_file = None
+
+            if json_file and os.path.exists(json_file):
+                try:
+                    creds = Credentials.from_service_account_file(
+                        json_file,
+                        scopes=['https://www.googleapis.com/auth/spreadsheets']
+                    )
+                    st.write(f"✅ Credentials loaded from {json_file}")
+                    return creds
+                except Exception as e:
+                    st.write(f"Warning: Could not load from {json_file}: {e}")
+
+            # Priority 2: Try Streamlit Secrets (fallback)
             try:
-                creds_base64 = st.secrets.get("GOOGLE_CREDENTIALS_BASE64", "")
-
-                if creds_base64:
-                    creds_json = base64.b64decode(creds_base64).decode('utf-8')
-                    creds_dict = json.loads(creds_json)
-
-                    # Fix: Replace literal \n with actual newlines in private_key
-                    if 'private_key' in creds_dict:
-                        creds_dict['private_key'] = creds_dict['private_key'].replace('\\n', '\n')
-
-                    st.write("DEBUG: Credentials loaded and fixed successfully")
-
+                creds_dict = st.secrets.get("google_service_account", {})
+                if creds_dict:
                     creds = Credentials.from_service_account_info(
                         creds_dict,
                         scopes=['https://www.googleapis.com/auth/spreadsheets']
                     )
-                    st.write("✅ Google Sheets credentials validated successfully!")
+                    st.write("✅ Credentials loaded from Streamlit Secrets")
                     return creds
             except Exception as e:
-                st.write(f"DEBUG: Secrets error: {e}")
-
-            # Try local JSON file (local development)
-            json_file = "personalknowledgeapp-0123180f35bc.json"
-            if os.path.exists(json_file):
-                st.write("DEBUG: Using local JSON file")
-                creds = Credentials.from_service_account_file(
-                    json_file,
-                    scopes=['https://www.googleapis.com/auth/spreadsheets']
-                )
-                return creds
+                st.write(f"Warning: Could not load from Secrets: {e}")
 
             st.error("Google Sheets credentials not found")
             return None
