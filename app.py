@@ -3,7 +3,7 @@
 import streamlit as st
 from datetime import datetime
 import pandas as pd
-from sheets_handler import SheetsHandler
+from shared_handler import SharedHandler
 import config
 
 # Page configuration
@@ -16,7 +16,7 @@ st.set_page_config(
 
 # Initialize session state
 if 'sheets_handler' not in st.session_state:
-    st.session_state.sheets_handler = SheetsHandler()
+    st.session_state.sheets_handler = SharedHandler()
 
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = "すべて"
